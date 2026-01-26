@@ -13,10 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{b7a16cda-72f5-411e-8451-b499d1d0ce29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chapter1-HelloWorldOfConcurrencyInCpp">
+      <UniqueIdentifier>{52872181-e2b6-4599-8850-0d4ddcaac5c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.cpp">
+      <Filter>Chapter1-HelloWorldOfConcurrencyInCpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h">
+      <Filter>Chapter1-HelloWorldOfConcurrencyInCpp</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
