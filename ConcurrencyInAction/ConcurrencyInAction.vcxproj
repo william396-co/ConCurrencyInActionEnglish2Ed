@@ -130,10 +130,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.cpp" />
+    <ClCompile Include="..\Chapter2-ManagingThreads\BasicThreadManagement.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h" />
+    <ClInclude Include="..\Chapter2-ManagingThreads\BasicThreadManagement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
