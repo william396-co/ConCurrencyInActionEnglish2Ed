@@ -19,6 +19,9 @@
     <Filter Include="Chapter2-ManagingThreads">
       <UniqueIdentifier>{b7a16cda-72f5-411e-8451-b499d1d0ce29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes">
+      <UniqueIdentifier>{58cbb92e-0018-4f11-80aa-b9fb088c81fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,6 +33,12 @@
     <ClCompile Include="..\Chapter2-ManagingThreads\BasicThreadManagement.cpp">
       <Filter>Chapter2-ManagingThreads</Filter>
     </ClCompile>
+    <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.cpp">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.cpp">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h">
@@ -37,6 +46,12 @@
     </ClInclude>
     <ClInclude Include="..\Chapter2-ManagingThreads\BasicThreadManagement.h">
       <Filter>Chapter2-ManagingThreads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.h">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.h">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
