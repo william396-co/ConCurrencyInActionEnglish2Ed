@@ -133,6 +133,8 @@
     <ClCompile Include="..\Chapter2-ManagingThreads\BasicThreadManagement.cpp" />
     <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.cpp" />
     <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.cpp" />
+    <ClCompile Include="..\Coroutine-Example\hello-coroutine.cpp" />
+    <ClCompile Include="..\Coroutine-Example\trace_coroutine.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +142,8 @@
     <ClInclude Include="..\Chapter2-ManagingThreads\BasicThreadManagement.h" />
     <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.h" />
     <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.h" />
+    <ClInclude Include="..\Coroutine-Example\hello-coroutine.h" />
+    <ClInclude Include="..\Coroutine-Example\trace_coroutine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,6 +22,9 @@
     <Filter Include="Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes">
       <UniqueIdentifier>{58cbb92e-0018-4f11-80aa-b9fb088c81fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Coroutine-Example">
+      <UniqueIdentifier>{9318c52a-f41c-4cae-90ca-64f78314025e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +42,12 @@
     <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.cpp">
       <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Coroutine-Example\hello-coroutine.cpp">
+      <Filter>Coroutine-Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Coroutine-Example\trace_coroutine.cpp">
+      <Filter>Coroutine-Example</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h">
@@ -52,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.h">
       <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\hello-coroutine.h">
+      <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\trace_coroutine.h">
+      <Filter>Coroutine-Example</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
