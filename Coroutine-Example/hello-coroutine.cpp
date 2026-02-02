@@ -11,6 +11,21 @@ namespace hello_coroutine {
 
 		h.resume();
 	}
+	coro hello(int max) {
+		std::cout << "hello world\n";
+		for (int i = 0; i < max;++i) {
+			std::cout << "hello " << i << "\n";
+			co_await std::suspend_always{};
+		}
+
+		std::cout << "hello end\n";
+	}
+	void hello_example() {
+		auto co = hello(10);
+		while (co.resume()) {
+			std::cout << "hello coroutine suspend\n";
+		}		
+	}
 	void example_generator() {
 		auto gen = fibonacci(10);
 		for (int i = 0; gen.resume();++i) {
@@ -32,8 +47,9 @@ void hello_coroutine_example() {
 #if 0
 	example_generator();
 	simple_coroutine_example();
-#else
 	async_compute_example();
+#else
+	hello_example();
 #endif
 
 

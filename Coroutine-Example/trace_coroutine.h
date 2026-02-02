@@ -6,10 +6,14 @@
 #include <chrono>
 #include <string>
 
+/*
+* https://lewissbaker.github.io/2017/09/25/coroutine-theory
+*/
+
 namespace Trace_Coroutine {
 
-	size_t level = 0;
-	std::string IDENT = " ";
+	extern size_t level;
+	extern std::string IDENT;
 
 	class Trace {
 	public:
@@ -219,15 +223,19 @@ namespace Trace_Coroutine {
 		std::cout << "Write data...\n";
 		co_return "I'm rich";
 	}
+#if 0
 	inline sync<int> reply()
 	{
 		std::cout << "Started await_answer" << std::endl;
 		auto a = co_await read_data();
-		std::cout << "Data we got is " << a << std::endl;
+		auto r = a.get();
+		std::cout << "Data we got is " << r << std::endl;
 		auto v = co_await write_data();
-		std::cout << "write result is " << v << std::endl;
+		auto r2 = v.get();
+		std::cout << "write result is " << r2 << std::endl;
 		co_return 42;
 	}
+#endif
 }
 
 void co_await_example();

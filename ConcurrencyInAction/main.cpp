@@ -19,9 +19,9 @@ int main() {
 	basic_thread_management_example();
 	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
-	hello_coroutine_example();
 #else
-	co_await_example();
+	//co_await_example();
+	hello_coroutine_example();
 #endif
 
 	return 0;

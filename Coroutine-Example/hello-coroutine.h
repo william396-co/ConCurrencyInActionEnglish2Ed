@@ -8,34 +8,42 @@
 #include <thread>
 
 namespace hello_coroutine {
-		
+
 	struct coro {
-		struct promise_type;	
+	public:
+		struct promise_type;
 		using handle_type = std::coroutine_handle<promise_type>;
 
+	private:
+		handle_type handle_;
+	public:
+		coro(coro const&) = delete;
+		coro& operator=(coro const&) = delete;
+
+		explicit coro(handle_type h) :handle_{ h } {}
+		~coro() { if (handle_)handle_.destroy(); }
+		bool resume() {
+			if (!handle_ || handle_.done())
+				return false;
+			handle_.resume();
+			return true;
+		}
+	public:
 		struct promise_type {
-			coro get_return_object(){
+			/* data */
+			coro get_return_object() {
 				return coro(handle_type::from_promise(*this));
 			}
 			std::suspend_always initial_suspend() { return {}; }
 			std::suspend_always final_suspend()noexcept { return {}; }
 			void return_void() {}
-			void unhandled_exception() {}
+			void unhandled_exception() { std::terminate(); }
 		};
-		handle_type handle_;
-
-		explicit coro(handle_type h) :handle_{ h } {}
-		~coro() { if (handle_)handle_.destroy(); }
-		bool resume() {
-			if (!handle_.done()) {
-				handle_.resume();
-				return !handle_.done();
-			}
-			return false;
-		}
 	};
 
 	void simple_coroutine_example();
+	coro hello(int max);
+	void hello_example();
 
 	template<typename T>
 	struct Genertor {
