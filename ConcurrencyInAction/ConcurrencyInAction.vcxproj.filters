@@ -13,11 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="NewFilter1">
-      <UniqueIdentifier>{b7a16cda-72f5-411e-8451-b499d1d0ce29}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Chapter1-HelloWorldOfConcurrencyInCpp">
       <UniqueIdentifier>{52872181-e2b6-4599-8850-0d4ddcaac5c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chapter2-ManagingThreads">
+      <UniqueIdentifier>{b7a16cda-72f5-411e-8451-b499d1d0ce29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes">
+      <UniqueIdentifier>{58cbb92e-0018-4f11-80aa-b9fb088c81fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Coroutine-Example">
+      <UniqueIdentifier>{9318c52a-f41c-4cae-90ca-64f78314025e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,10 +33,40 @@
     <ClCompile Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.cpp">
       <Filter>Chapter1-HelloWorldOfConcurrencyInCpp</Filter>
     </ClCompile>
+    <ClCompile Include="..\Chapter2-ManagingThreads\BasicThreadManagement.cpp">
+      <Filter>Chapter2-ManagingThreads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.cpp">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.cpp">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Coroutine-Example\hello-coroutine.cpp">
+      <Filter>Coroutine-Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Coroutine-Example\trace_coroutine.cpp">
+      <Filter>Coroutine-Example</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h">
       <Filter>Chapter1-HelloWorldOfConcurrencyInCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter2-ManagingThreads\BasicThreadManagement.h">
+      <Filter>Chapter2-ManagingThreads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.h">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.h">
+      <Filter>Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\hello-coroutine.h">
+      <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\trace_coroutine.h">
+      <Filter>Coroutine-Example</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
