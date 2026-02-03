@@ -8,6 +8,7 @@
 
 /*
 * https://lewissbaker.github.io/2017/09/25/coroutine-theory
+* Lewis Baker C++ 协程提案作者
 */
 
 namespace Trace_Coroutine {

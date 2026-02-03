@@ -69,19 +69,40 @@ namespace hello_coroutine {
 	}
 }
 
-void hello_coroutine_example() {
+void hello_coroutine_example() 
+{
 	using namespace hello_coroutine;
 	
 	{
 		using namespace Case1;
-		example_generator();
-		async_compute_example();
+		//example_generator();
+		//async_compute_example();
 	}
 	{
 		using namespace Case2;
 		//simple_coroutine_example();
 		//hello_example();
 		//coro_task_example();
-		coroGen_example();
+		//coroGen_example();
+	}
+	{
+		using namespace cppref_code;
+
+#if 0
+		good();
+
+		std::jthread out;
+		resuming_on_new_thread(out);
+		std::cout << "[" << std::this_thread::get_id() << "]\n";
+#else
+		auto coro = generate(8);
+		coro();// emits only one first element == 0
+		for (int i = 0; i != 4;++i) {
+			coro();// emits 1 2 3 4, one per each iteration
+			std::cout << ": ";
+		}
+		coro.disable_suspension();
+		coro();// emits the tail numbers 5 6 7 all at ones
+#endif
 	}
 }
