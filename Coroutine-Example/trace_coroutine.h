@@ -1,13 +1,14 @@
 #pragma once
 
 #include <coroutine>
-//#include <experimental/coroutine>
 #include <iostream>
 #include <chrono>
 #include <string>
+#include <thread>
 
 /*
 * https://lewissbaker.github.io/2017/09/25/coroutine-theory
+* Lewis Baker C++ 协程提案作者
 */
 
 namespace Trace_Coroutine {
@@ -193,7 +194,7 @@ namespace Trace_Coroutine {
 			std::cout << "Await " << (ready ? "is ready" : "isn't ready") << "\n";
 			return coro.done();
 		}
-		void await_suspend(std::coroutine_handle<> awaiting) 
+		void await_suspend(std::coroutine_handle<> awaiting)
 		{
 			{
 				Trace t;
@@ -238,4 +239,66 @@ namespace Trace_Coroutine {
 #endif
 }
 
+// https://zhuanlan.zhihu.com/p/497224333
+namespace print_coroutine
+{
+	struct task 
+	{
+		struct promise_type {
+			promise_type() {
+				std::cout << "1. create promise type\n";
+			}
+			~promise_type() {
+				std::cout << "16. destructor promise type\n";
+			}
+			auto get_return_object() {
+				std::cout << "2. create coroutine return object,and the coroutine is created now\n";
+				return task{ std::coroutine_handle<promise_type>::from_promise(*this) };
+			}
+			std::suspend_never initial_suspend() { 
+				std::cout << "3. do you want suspend the current coroutine?\n";
+				std::cout << "4. don't suspend because return std::suspend_never, so continue to execute coroutine body\n";
+				return {};
+			}
+			std::suspend_never final_suspend()noexcept {
+				std::cout << "14. coroutine body finished,do you want to suspend the current coroutine?\n";
+				std::cout << "15. don't suspend because return std::suspend_never,and the coroutine automatically destroyed,bye\n";
+				return {};
+			}
+			void return_void() {
+				std::cout << "13. coroutine don't return value,so return_void is called\n";
+			}
+			void unhandled_exception() {}
+		};
+		std::coroutine_handle<promise_type> handle_;
+	};
+
+	struct awaitable 
+	{
+		bool await_ready() {
+			std::cout << "6. do you want suspend current coroutine?\n";
+			std::cout << "7. yes, suspend because awaiter.await_ready() return false\n";
+			return false;
+		}
+		void await_suspend(std::coroutine_handle<task::promise_type> h) {
+			std::cout << "8. execute awaiter.await_suspend()\n";
+			std::thread t([h]()mutable { h();});
+			t.detach();
+			std::cout << "9. a new thread launch,and will return back to caller\n";
+		}
+		void await_resume()noexcept {
+			std::cout << "11. await_resume()\n";
+		}
+	};
+
+	inline task test() {
+		std::cout << "5. begin to execute coroutine body,the thread id =" << std::this_thread::get_id() << "\n";
+		co_await awaitable{};
+		std::cout << "12. coroutine resumed,continue execute coroutine body now,the thread id = " << std::this_thread::get_id() << "\n";
+	}
+
+}
+
 void co_await_example();
+
+void trace_coroutine_example();

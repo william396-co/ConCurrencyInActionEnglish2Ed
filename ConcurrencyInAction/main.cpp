@@ -21,7 +21,8 @@ int main() {
 	atomic_op_types_in_cpp_example();
 #else
 	//co_await_example();
-	hello_coroutine_example();
+	//hello_coroutine_example();
+	trace_coroutine_example();
 #endif
 
 	return 0;

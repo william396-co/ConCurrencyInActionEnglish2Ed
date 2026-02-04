@@ -7,6 +7,8 @@
 #include <chrono>
 #include <thread>
 #include <numeric>
+#include <cassert>
+#include <cstdint>
 
 namespace hello_coroutine {
 
@@ -212,7 +214,7 @@ namespace hello_coroutine {
 				Genertor get_return_object() {
 					return Genertor(handle_type::from_promise(*this));
 				}
-				std::suspend_always initial_suspend()noexcept { return {}; }
+				std::suspend_always initial_suspend() { return {}; }
 				std::suspend_always final_suspend()noexcept { return {}; }
 				std::suspend_always yield_value(T value) {
 					value_ = value;
@@ -220,7 +222,7 @@ namespace hello_coroutine {
 				}
 				void return_void() {}
 				void unhandled_exception() { exception_ = std::current_exception(); }
-			};
+		};
 
 			handle_type handle_;
 
@@ -332,6 +334,242 @@ namespace hello_coroutine {
 			co_return 42;
 		}
 		Task<int> async_compute_example();
+	}
+
+	namespace cppref_code
+	{
+		//https://cppreference.com/w/cpp/language/coroutines.html
+		struct coro {
+			struct promise_type;
+			using handle_type = std::coroutine_handle<promise_type>;
+
+			struct promise_type
+			{
+				auto get_return_object() { return coro{ handle_type::from_promise(*this) }; }
+#if 1
+				std::suspend_always initial_suspend() { std::cout << "initial_suspend always\n"; return {}; }
+#else
+				std::suspend_never initial_suspend() { std::cout << "initial_suspend never\n"; return {}; }
+#endif
+				std::suspend_always final_suspend()noexcept { std::cout << "final_suspend\n"; return {}; }
+				void return_void() { std::cout << "return_void\n"; }
+				void unhandled_exception() {}
+			};
+			explicit coro(auto h) :handle_{ h } { assert(h); }
+			~coro() { if (handle_)handle_.destroy(); }
+			bool resume() {
+				if (!handle_ || handle_.done())
+					return false;
+				std::cout << "resume\n";
+				handle_.resume();
+				return true;
+			}
+		private:
+			handle_type handle_;
+		};
+
+		inline void good() {
+			coro h = [](int i)->coro {
+				std::cout << i << "\n";
+				co_return;
+				}(42);
+			std::cout << "sizof(coro)=" << sizeof(coro) << "\n";
+			std::cout << "sizof(coro::handle_type)=" << sizeof(coro::handle_type) << "\n";
+			h.resume();
+			std::cout << "==================\n";
+		}
+
+		struct tunable_coro 
+		{
+			// A awaiter whose "readiness" is determined via constructor's parameter
+			struct tunable_awaiter {
+			public:
+				explicit tunable_awaiter(bool ready):ready_{ready}{ }
+				// Three standard awaiter interface functions:
+				bool await_ready() { return ready_; }
+				void await_suspend(std::coroutine_handle<>)noexcept {}
+				void await_resume()noexcept {}
+			private:
+				bool ready_{};
+			};
+			struct promise_type {
+				using handle_type = std::coroutine_handle<promise_type>;
+			public:
+				auto get_return_object() {
+					return tunable_coro{ handle_type::from_promise(*this) };
+				}
+				auto initial_suspend() { return std::suspend_always{}; }
+				auto final_suspend()noexcept { return std::suspend_always{}; }
+				void return_void(){}
+				void unhandled_exception() { std::terminate(); }
+				// A user provided transforming function which returns the custom awaiter:
+				auto await_transform(std::suspend_always) {
+					return tunable_awaiter(!ready_);
+				}
+				void disable_suspension() { ready_ = false; }
+			private:
+				bool ready_{true};
+			};
+		public:
+			explicit tunable_coro(auto h) :handle_{ h } { assert(h); }
+			~tunable_coro() { if (handle_)handle_.destroy(); }
+
+			tunable_coro(tunable_coro const&) = delete;
+			tunable_coro& operator=(tunable_coro const&) = delete;
+			tunable_coro(tunable_coro&&) = delete;
+			tunable_coro& operator=(tunable_coro&&) = delete;
+
+			void disable_suspension()const {
+				if (handle_.done())
+					return;
+				handle_.promise().disable_suspension();
+				//handle_();
+			}
+			bool operator()()const {
+				if (!handle_.done())
+					handle_();
+				return !handle_.done();
+			}
+		private:
+			promise_type::handle_type handle_;
+		};
+		inline tunable_coro generate(int n)
+		{
+			for (int i{}; i != n; ++i)
+			{
+				std::cout << i << ' ';
+				// The awaiter passed to co_await goes to promise_type::await_transform which
+				// issues tunable_awaiter that initially causes suspension (returning back to
+				// main at each iteration), but after a call to disable_suspension no suspension
+				// happens and the loop runs to its end without returning to main().
+				co_await std::suspend_always{};
+			}
+		}
+
+		inline auto switch_2_new_thread(std::jthread& out) {
+			struct awaitable {
+			private:
+				std::jthread* p_out;
+			public:
+				explicit awaitable(std::jthread* j) :p_out{ j } {}
+				~awaitable() { p_out = nullptr; }
+
+				bool await_ready() { std::cout << "await_ready\n"; return false; }
+				void await_suspend(std::coroutine_handle<> h) {
+					std::jthread& out = *p_out;
+					if (out.joinable())
+						throw std::runtime_error("Output jthread parameter not empty");
+					out = std::jthread([h]() {
+						std::cout <<"["<<std::this_thread::get_id()<<"]: h.resume\n";
+						h.resume();
+						});
+					std::cout << "New threadID:" << out.get_id() << "\n";
+				}
+				void await_resume()noexcept { std::cout << "await_resume\n"; }
+			};
+			return awaitable{ &out };
+		}
+		struct Task {
+			struct promise_type;
+			using handle_type = std::coroutine_handle<promise_type>;
+
+			struct promise_type 
+			{
+				Task get_return_object() { std::cout << "get_return_object\n"; return {}; }
+				std::suspend_never initial_suspend() { std::cout << "initial_suspend\n";  return {}; }
+				std::suspend_never final_suspend()noexcept { std::cout << "final_suspend\n";  return {}; }
+				void return_void() { std::cout << "return_void\n"; }
+				void unhandled_exception() { std::cout << "unhandled_exception\n"; }
+				// custom non-throwing overload of new
+				void* operator new(std::size_t n) noexcept
+				{
+					std::cout << "size=" << n << "\n";//72
+					if (void* mem = std::malloc(n))
+						return mem;
+					return nullptr; // allocation failure
+				}
+			};
+		};
+		inline Task resuming_on_new_thread(std::jthread& out) {
+			std::cout << "Coroutine started on thread:" << std::this_thread::get_id() << "\n";
+			co_await switch_2_new_thread(out);
+			std::cout<<"Coroutine resumed on thread:"<<std::this_thread::get_id()<<"\n";
+			std::cout << "==================\n";
+		}
+
+		template<typename T>
+		struct Generator {
+			struct promise_type;
+			using handle_type = std::coroutine_handle<promise_type>;
+
+			struct promise_type {
+				T value_;
+				std::exception_ptr exception_;
+				auto get_return_object() {
+					return Generator{ handle_type::from_promise(*this) };
+				}
+				std::suspend_always initial_suspend() { return {}; }
+				std::suspend_always final_suspend()noexcept { return {}; }
+				void return_void(){}
+				void unhandled_exception() {
+					exception_ = std::current_exception();
+				}
+				template<std::convertible_to<T> From>
+				std::suspend_always yield_value(From&& from) {
+					value_ = std::move(from);
+					return {};
+				}
+			};
+
+			explicit Generator(auto h) :handle_{ h } { assert(h); }
+			~Generator() { if (handle_)handle_.destroy(); }
+			explicit operator bool() {
+				fill();
+				return !handle_.done();
+			}
+			T operator()() {
+				fill();
+				full_ = false;
+				return std::move(handle_.promise().value_);
+			}
+		private:
+			void fill() {
+				if (!full_) {
+					handle_();
+					if (handle_.promise().exception_) {
+						std::rethrow_exception(handle_.promise().exception_);
+					}
+					full_ = true;
+				}
+			}
+
+		private:
+			bool full_ = false;
+			handle_type handle_;
+		};
+
+		inline Generator<uint64_t>	fibonacci_sequence(unsigned n)
+		{
+			if (0 == n) co_return;
+			if (n > 94)
+				throw std::runtime_error("Too big Fibonacci sequence, Elements would overflow");
+			co_yield 0;
+
+			if (0 == 1)
+				co_return;
+			co_yield 1;
+
+			if (2 == n)
+				co_return;
+			uint64_t a = 0;
+			uint64_t b = 1;
+			for (size_t i = 2;i != n;++i) {
+				uint64_t s = a + b;
+				co_yield s;
+				a = b;
+				b = s;
+			}
+		}
 	}
 }
 
