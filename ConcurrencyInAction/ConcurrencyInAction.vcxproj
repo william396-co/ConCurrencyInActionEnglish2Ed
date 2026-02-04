@@ -146,6 +146,9 @@
     <ClInclude Include="..\Coroutine-Example\generator.h" />
     <ClInclude Include="..\Coroutine-Example\hello-coroutine.h" />
     <ClInclude Include="..\Coroutine-Example\manual_lifetime.h" />
+    <ClInclude Include="..\Coroutine-Example\new_thread_executor.h" />
+    <ClInclude Include="..\Coroutine-Example\sync_wait.h" />
+    <ClInclude Include="..\Coroutine-Example\task.h" />
     <ClInclude Include="..\Coroutine-Example\trace_coroutine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

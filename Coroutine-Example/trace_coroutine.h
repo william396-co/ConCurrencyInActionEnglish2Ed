@@ -282,8 +282,7 @@ namespace print_coroutine
 		}
 		void await_suspend(std::coroutine_handle<task::promise_type> h) {
 			std::cout << "8. execute awaiter.await_suspend()\n";
-			std::thread t([h]()mutable { h();});
-			t.detach();
+			std::thread([h]()mutable { h();}).detach();
 			std::cout << "9. a new thread launch,and will return back to caller\n";
 		}
 		void await_resume()noexcept {
