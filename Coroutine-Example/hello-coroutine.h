@@ -8,6 +8,7 @@
 #include <thread>
 #include <numeric>
 #include <cassert>
+#include <cstdint>
 
 namespace hello_coroutine {
 
@@ -337,6 +338,7 @@ namespace hello_coroutine {
 
 	namespace cppref_code
 	{
+		//https://cppreference.com/w/cpp/language/coroutines.html
 		struct coro {
 			struct promise_type;
 			using handle_type = std::coroutine_handle<promise_type>;
@@ -493,6 +495,80 @@ namespace hello_coroutine {
 			co_await switch_2_new_thread(out);
 			std::cout<<"Coroutine resumed on thread:"<<std::this_thread::get_id()<<"\n";
 			std::cout << "==================\n";
+		}
+
+		template<typename T>
+		struct Generator {
+			struct promise_type;
+			using handle_type = std::coroutine_handle<promise_type>;
+
+			struct promise_type {
+				T value_;
+				std::exception_ptr exception_;
+				auto get_return_object() {
+					return Generator{ handle_type::from_promise(*this) };
+				}
+				std::suspend_always initial_suspend() { return {}; }
+				std::suspend_always final_suspend()noexcept { return {}; }
+				void return_void(){}
+				void unhandled_exception() {
+					exception_ = std::current_exception();
+				}
+				template<std::convertible_to<T> From>
+				std::suspend_always yield_value(From&& from) {
+					value_ = std::move(from);
+					return {};
+				}
+			};
+
+			explicit Generator(auto h) :handle_{ h } { assert(h); }
+			~Generator() { if (handle_)handle_.destroy(); }
+			explicit operator bool() {
+				fill();
+				return !handle_.done();
+			}
+			T operator()() {
+				fill();
+				full_ = false;
+				return std::move(handle_.promise().value_);
+			}
+		private:
+			void fill() {
+				if (!full_) {
+					handle_();
+					if (handle_.promise().exception_) {
+						std::rethrow_exception(handle_.promise().exception_);
+					}
+					full_ = true;
+				}
+			}
+
+		private:
+			bool full_ = false;
+			handle_type handle_;
+		};
+
+		inline Generator<uint64_t>	fibonacci_sequence(unsigned n)
+		{
+			if (0 == n) co_return;
+			if (n > 94)
+				throw std::runtime_error("Too big Fibonacci sequence, Elements would overflow");
+			co_yield 0;
+
+			if (0 == 1)
+				co_return;
+			co_yield 1;
+
+			if (2 == n)
+				co_return;
+			uint64_t a = 0;
+			uint64_t b = 1;
+			for (size_t i = 2;i != n;++i) {
+				uint64_t s = a + b;
+				co_yield s;
+				a = b;
+				b = s;
+			}
 		}
 	}
 }

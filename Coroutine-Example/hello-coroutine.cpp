@@ -88,11 +88,12 @@ void hello_coroutine_example()
 	{
 		using namespace cppref_code;
 
-#if 0
-		good();
+#if 1
+		//good();
 
 		std::jthread out;
 		resuming_on_new_thread(out);
+		std::this_thread::sleep_for(std::chrono::seconds{ 1 });
 		std::cout << "[" << std::this_thread::get_id() << "]\n";
 #else
 		auto coro = generate(8);
@@ -104,5 +105,18 @@ void hello_coroutine_example()
 		coro.disable_suspension();
 		coro();// emits the tail numbers 5 6 7 all at ones
 #endif
+
+		try {
+			auto gen = fibonacci_sequence(15);
+			for (int i = 0; gen;++i) {
+				std::cout << "fib(" << i << ")=" << gen() << "\n";
+			}
+		}
+		catch (std::exception const& e) {
+			std::cerr << "Exception:" << e.what() << "\n";
+		}
+		catch (...) {
+			std::cerr << "unknow exception.\n";
+		}
 	}
 }
