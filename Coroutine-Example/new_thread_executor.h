@@ -27,14 +27,17 @@ private:
 			}
 			try {
 
-				std::thread([this, h]()mutable {
-					// resume the coroutine
-					h.resume();
+				std::thread{
+					[h]()mutable {
+						// resume the coroutine
+						h.resume();
 
-					std::unique_lock lock(context_.mtx_);
-					--context_.activeThreadCnt_;
-					std::notify_all_at_thread_exit(context_.cv_, std::move(lock));
-					}).detach();
+	#if 0
+						std::unique_lock lock(ctx.mtx_);
+						--ctx.activeThreadCnt_;
+						std::notify_all_at_thread_exit(ctx.cv_, std::move(lock));
+	#endif
+						}}.detach();
 			}
 			catch (...) {
 				std::lock_guard lock(context_.mtx_);

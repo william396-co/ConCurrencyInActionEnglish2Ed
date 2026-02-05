@@ -150,16 +150,16 @@ public:
 	using promise_type = task_promise<T>;
 	using handle_t = std::coroutine_handle<promise_type>;
 
-	explicit task(auto h) :coro_{ h } { assert(h); }
+	explicit task(auto h)noexcept :coro_{ h } { assert(h); }
 
-	task(task&& other) :coro_(std::exchange(other.coro_, {})) {}
+	task(task&& other) noexcept :coro_(std::exchange(other.coro_, {})) {}
 	~task() { if (coro_)coro_.destroy(); }
 
 	auto operator co_await() && noexcept {
 		struct awaiter {
 		public:
 			explicit awaiter(handle_t h):coro_{h}{}
-			bool await_ready() { return false; }
+			bool await_ready()noexcept { return false; }
 			auto await_suspend(std::coroutine_handle<>h)noexcept {
 				coro_.promise().continuation_ = h;
 				return coro_;

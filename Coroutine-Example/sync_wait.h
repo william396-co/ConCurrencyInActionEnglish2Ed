@@ -12,7 +12,7 @@ struct sync_wait_task {
 	struct promise_type;
 	using handle_t = std::coroutine_handle<promise_type>;
 	struct promise_type {
-		auto get_return_object() {
+		auto get_return_object()noexcept {
 			return sync_wait_task{ handle_t::from_promise(*this) };
 		}
 		auto initial_suspend() { return std::suspend_always{}; }

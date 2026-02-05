@@ -61,8 +61,10 @@ task<int> compute_meaning_of_life(new_thread_context::executor ex) {
 	co_return 42;
 }
 task<void> run(new_thread_context::executor ex) {
-	int result = co_await compute_meaning_of_life(ex);
-	std::cout << "meaning of life is " << result << "\n";
+	for (;;) {
+		int result = co_await compute_meaning_of_life(ex);
+		std::cout << "[" << std::this_thread::get_id() << "]meaning of life is " << result << "\n";
+	}
 }
 
 
@@ -88,5 +90,6 @@ void generator_test()
 #else
 	new_thread_context context;
 	sync_wait(run(context.get_executor()));
+	std::this_thread::sleep_for(std::chrono::seconds{ 3 });
 #endif
 }
