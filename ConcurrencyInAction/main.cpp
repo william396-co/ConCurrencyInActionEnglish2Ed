@@ -10,6 +10,7 @@
 
 #include "../Coroutine-Example/hello-coroutine.h"
 #include "../Coroutine-Example/trace_coroutine.h"
+#include "../Coroutine-Example/generator.h"
 
 
 int main() {
@@ -19,10 +20,11 @@ int main() {
 	basic_thread_management_example();
 	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
-#else
-	//co_await_example();
-	//hello_coroutine_example();
+	co_await_example();
+	hello_coroutine_example();
 	trace_coroutine_example();
+#else
+	generator_test();
 #endif
 
 	return 0;
