@@ -69,13 +69,13 @@ public:
 		reference operator*()const {
 			return coro_.promise().get();
 		}
-		// pre incr
+		// pre-increment
 		iterator& operator++() {
 			coro_.promise().clear_value();
 			coro_.resume();
 			return *this;
 		}
-		// post incr
+		// post-increment
 		void operator++(int) {
 			coro_.promise().clear_value();
 			coro_.resume();
