@@ -19,12 +19,12 @@ int main() {
 	hello_concurrency_world_example();
 	basic_thread_management_example();
 	memory_model_basics_example();
-	atomic_op_types_in_cpp_example();
 	co_await_example();
 	hello_coroutine_example();
 	trace_coroutine_example();
-#else
 	generator_test();
+#else
+	atomic_op_types_in_cpp_example();
 #endif
 
 	return 0;
