@@ -77,7 +77,7 @@ namespace atomic_operation_and_types_in_cpp
 			namespace list_5_11 {
 				std::vector<int> queue_data;
 				std::atomic<int> count{};
-				std::mutex cout_mtx;
+				SpinLock cout_mtx;
 			}
 		}
 	}

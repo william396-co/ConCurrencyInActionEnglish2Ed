@@ -300,9 +300,9 @@ namespace atomic_operation_and_types_in_cpp {
 
 				extern std::vector<int> queue_data;
 				extern std::atomic<int> count;
-				extern std::mutex cout_mtx;
+				extern SpinLock cout_mtx;
 				inline void process(int n) {
-					std::lock_guard lock(cout_mtx);
+					std::lock_guard<SpinLock> lock(cout_mtx);
 					std::cout <<"["<<std::this_thread::get_id()<< "] process(" << n << ")\n";
 				}
 				inline void populate_queue() {
@@ -319,7 +319,8 @@ namespace atomic_operation_and_types_in_cpp {
 						int item_idx;
 						if ((item_idx = count.fetch_sub(1, std::memory_order_acquire)) <= 0) {
 							//wait_for_more_items();
-							continue;
+							//continue;
+							break;
 						}
 						process(queue_data[item_idx - 1]);						
 					}
