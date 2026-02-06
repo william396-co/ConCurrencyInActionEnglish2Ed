@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <functional>
 #include <vector>
+#include <mutex>
 
 namespace atomic_operation_and_types_in_cpp {
 
@@ -299,8 +300,10 @@ namespace atomic_operation_and_types_in_cpp {
 
 				extern std::vector<int> queue_data;
 				extern std::atomic<int> count;
+				extern SpinLock cout_mtx;
 				inline void process(int n) {
-					std::cout << "process(" << n << ")\n";
+					std::lock_guard<SpinLock> lock(cout_mtx);
+					std::cout <<"["<<std::this_thread::get_id()<< "] process(" << n << ")\n";
 				}
 				inline void populate_queue() {
 					constexpr auto number_of_items = 20;
@@ -316,7 +319,8 @@ namespace atomic_operation_and_types_in_cpp {
 						int item_idx;
 						if ((item_idx = count.fetch_sub(1, std::memory_order_acquire)) <= 0) {
 							//wait_for_more_items();
-							continue;
+							//continue;
+							break;
 						}
 						process(queue_data[item_idx - 1]);						
 					}
