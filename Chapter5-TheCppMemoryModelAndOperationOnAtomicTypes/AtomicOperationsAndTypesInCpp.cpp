@@ -77,6 +77,7 @@ namespace atomic_operation_and_types_in_cpp
 			namespace list_5_11 {
 				std::vector<int> queue_data;
 				std::atomic<int> count{};
+				std::mutex cout_mtx;
 			}
 		}
 	}
@@ -283,6 +284,9 @@ void atomic_op_types_in_cpp_example()
 				using namespace list_5_11;
 				std::vector<std::jthread> ts;
 				ts.emplace_back(populate_queue);
+				ts.emplace_back(consume_queue_items);
+				ts.emplace_back(consume_queue_items);
+				ts.emplace_back(consume_queue_items);
 				ts.emplace_back(consume_queue_items);
 				ts.emplace_back(consume_queue_items);
 			}
