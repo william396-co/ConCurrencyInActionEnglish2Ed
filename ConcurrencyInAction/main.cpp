@@ -16,15 +16,19 @@
 int main() {
 
 #if 0
+	// chapter1
 	hello_concurrency_world_example();
-	basic_thread_management_example();
-	memory_model_basics_example();
+	// coroutine example
 	co_await_example();
 	hello_coroutine_example();
 	trace_coroutine_example();
 	generator_test();
-#else
+	// chapter5
+	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
+#else
+	// chapter2
+	managing_threads_example();
 #endif
 
 	return 0;
