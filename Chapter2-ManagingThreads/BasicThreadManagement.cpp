@@ -200,5 +200,7 @@ void managing_threads_example() {
 	// 2.5 Identifying threads
 	{
 		using namespace identifying_threads;
+		auto id = std::this_thread::get_id();
+		std::cout << "this thread id: " << id << "\n";
 	}
 }
