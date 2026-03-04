@@ -327,6 +327,29 @@ namespace atomic_operation_and_types_in_cpp {
 				}
 			}
 		}
+
+		// 5.3.5 Fences
+		namespace fences {
+			namespace list_5_12 {
+				extern std::atomic<bool> x;
+				extern std::atomic<bool> y;
+				extern std::atomic<int> z;
+				void write_x_then_y();
+				void read_y_then_x();
+
+			}
+		}
+		// 5.3.6 Ordering non-atomic operations with atomic
+		namespace ordering_no_atomic {
+			namespace list_5_13 {
+				extern bool x;
+				extern std::atomic<bool> y;
+				extern std::atomic<int> z;
+				void write_x_then_y();
+				void read_y_then_x();
+
+			}
+		}
 	}
 }
 

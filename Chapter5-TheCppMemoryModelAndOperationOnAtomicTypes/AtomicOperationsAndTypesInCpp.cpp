@@ -80,6 +80,42 @@ namespace atomic_operation_and_types_in_cpp
 				SpinLock cout_mtx;
 			}
 		}
+		namespace fences {
+			namespace list_5_12 {
+				std::atomic<bool> x;
+				std::atomic<bool> y;
+				std::atomic<int> z;
+				void write_x_then_y() {
+					x.store(true, std::memory_order_relaxed);
+					std::atomic_thread_fence(std::memory_order_release);
+					y.store(true, std::memory_order_relaxed);
+				}
+				void read_y_then_x() {
+					while (!y.load(std::memory_order_relaxed));
+					std::atomic_thread_fence(std::memory_order_acquire);
+					if (x.load(std::memory_order_relaxed))
+						++z;
+				}
+			}
+		}
+		namespace ordering_no_atomic {
+			namespace list_5_13 {
+				bool x;
+				std::atomic<bool> y;
+				std::atomic<int> z;
+				void write_x_then_y() {
+					x = true;
+					std::atomic_thread_fence(std::memory_order_release);
+					y.store(true, std::memory_order_relaxed);
+				}
+				void read_y_then_x() {
+					while (!y.load(std::memory_order_relaxed));
+					std::atomic_thread_fence(std::memory_order_acquire);
+					if (x)
+						++z;
+				}
+			}
+		}
 	}
 }
 
@@ -142,6 +178,7 @@ void atomic_op_types_in_cpp_example()
 				}, i);
 		}
 	}
+
 
 	{// 5.2.4 Operations on std::atomic<T>::pointer arithmetic
 
@@ -289,6 +326,36 @@ void atomic_op_types_in_cpp_example()
 				ts.emplace_back(consume_queue_items);
 				ts.emplace_back(consume_queue_items);
 				ts.emplace_back(consume_queue_items);
+			}
+		}
+		// 5.3.5 Fences
+		{
+			using namespace fences;
+			{
+				using namespace list_5_12;
+				x = false;
+				y = false;
+				z = 0;
+				std::thread a(write_x_then_y);
+				std::thread b(read_y_then_x);
+				b.join();
+				a.join();
+				assert(z.load() != 0);
+			}
+		}
+		// 5.3.6 Ordering non-atomic operations with atomic
+		{
+			using namespace ordering_no_atomic;
+			{
+				using namespace list_5_13;
+				x = false;
+				y = false;
+				z = 0;
+				std::thread a(write_x_then_y);
+				std::thread b(read_y_then_x);
+				b.join();
+				a.join();
+				assert(z.load() != 0);
 			}
 		}
 	}
