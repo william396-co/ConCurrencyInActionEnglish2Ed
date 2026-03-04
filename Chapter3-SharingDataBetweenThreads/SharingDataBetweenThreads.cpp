@@ -1,6 +1,6 @@
 #include "SharingDataBetweenThreads.h"
 
-
+// 3.2 Protecting shared data with mutexes
 namespace protecting_shared_data_with_mutexes
 {
 	namespace using_mutex_in_cpp {
@@ -98,6 +98,28 @@ namespace protecting_shared_data_with_mutexes
 	}
 }
 
+// 3.3 Alternative facilities for protecting shared data
+namespace alternative_facilities_for_protecting_shared_data {
+	// 3.3.1 Protecting shared data during initialization
+	namespace protecting_shared_data_during_initialization {
+		namespace list_3_11 {
+			std::shared_ptr<some_resource> resource_ptr;
+			std::mutex resource_mtx;
+			std::once_flag resource_flag;
+		}
+	}
+
+	// 3.3.2 Protecting rarely updated data structures
+	namespace protecting_rarely_updated_data {
+
+	}
+
+	// 3.3.3 Recursive locking
+	namespace recursive_locking {
+
+	}
+}
+
 void sharing_data_between_threads_example() {
 	// 3.1
 	{
@@ -157,7 +179,49 @@ void sharing_data_between_threads_example() {
 		{
 			using namespace transfering_mutex_ownership;
 			
-			process_data();
+			std::vector<std::thread> ts;
+			for (int i = 0;i != 3;++i) {
+				ts.emplace_back(process_data);
+			}
+			for (auto& t : ts)
+				t.join();
+		}
+		// 3.2.8 Locking at an appropriate granularity
+		{
+			using namespace locking_at_an_appropriate_granularity;
+
+		}
+	}
+
+	// 3.3 Alternative facilities for protecting shared data
+	{
+		using namespace alternative_facilities_for_protecting_shared_data;
+
+		// 3.3.1 Protecting shared data during initialization
+		{
+			using namespace protecting_shared_data_during_initialization;
+
+			
+			{
+				using namespace list_3_11;
+				std::vector<std::thread> ts;
+				for (int i = 0; i != 10;++i) {
+					ts.emplace_back(foo);
+					//ts.emplace_back(undefined_behavior_with_double_checked_lock);
+				}
+				for (auto& t : ts)
+					t.join();
+
+			}
+		}
+
+		// 3.3.2 Protecting rarely updated data structures
+		{
+			using namespace protecting_rarely_updated_data;
+			{
+				using namespace list_3_13;				
+
+			}
 		}
 	}
 }
