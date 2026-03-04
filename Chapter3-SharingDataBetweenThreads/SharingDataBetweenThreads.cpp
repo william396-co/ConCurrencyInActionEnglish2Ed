@@ -93,6 +93,9 @@ namespace protecting_shared_data_with_mutexes
 			}
 		}
 	}
+	namespace transfering_mutex_ownership {
+		std::mutex some_mtx;
+	}
 }
 
 void sharing_data_between_threads_example() {
@@ -147,6 +150,14 @@ void sharing_data_between_threads_example() {
 				t.join();
 #endif
 			}
+		}
+
+
+		// 3.2.7 Transfering mutex ownership between scopes
+		{
+			using namespace transfering_mutex_ownership;
+			
+			process_data();
 		}
 	}
 }

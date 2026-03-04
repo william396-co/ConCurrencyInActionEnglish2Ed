@@ -269,6 +269,29 @@ namespace protecting_shared_data_with_mutexes
 	// 3.2.7 Transfering mutex ownership between scopes
 	namespace transfering_mutex_ownership {
 
+		inline void prepare_data() {
+			std::cout << "start prepare_data\n";
+			std::this_thread::sleep_for(std::chrono::milliseconds{ 100 });
+			std::cout << "finished prepare_data\n";
+		}
+
+		inline std::unique_lock<std::mutex> get_lock() {
+			extern std::mutex some_mtx;
+			std::unique_lock lk(some_mtx);
+			prepare_data();
+			return lk;
+		}
+
+
+		inline void do_something() {
+			std::cout << "start do something\n";
+			std::this_thread::sleep_for(std::chrono::milliseconds{ 100 });
+			std::cout << "finished do something\n";
+		}
+		inline void process_data() {
+			std::unique_lock lk(get_lock());
+			do_something();
+		}
 	}
 }
 
