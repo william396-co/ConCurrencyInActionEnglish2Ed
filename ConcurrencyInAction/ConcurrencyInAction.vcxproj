@@ -132,6 +132,7 @@
     <ClCompile Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.cpp" />
     <ClCompile Include="..\Chapter2-ManagingThreads\BasicThreadManagement.cpp" />
     <ClCompile Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.cpp" />
+    <ClCompile Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.cpp" />
     <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.cpp" />
     <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.cpp" />
     <ClCompile Include="..\Coroutine-Example\example_test.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h" />
     <ClInclude Include="..\Chapter2-ManagingThreads\BasicThreadManagement.h" />
     <ClInclude Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.h" />
+    <ClInclude Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.h" />
     <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.h" />
     <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.h" />
     <ClInclude Include="..\Coroutine-Example\generator.h" />
