@@ -51,11 +51,11 @@
     <ClCompile Include="..\Coroutine-Example\trace_coroutine.cpp">
       <Filter>Coroutine-Example</Filter>
     </ClCompile>
-    <ClCompile Include="..\Coroutine-Example\example_test.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.cpp">
       <Filter>Chapter3-SharingDataBetweenThreads</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Coroutine-Example\example_test.cpp">
+      <Filter>Coroutine-Example</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
