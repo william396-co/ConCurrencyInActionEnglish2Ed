@@ -25,6 +25,9 @@
     <Filter Include="Coroutine-Example">
       <UniqueIdentifier>{9318c52a-f41c-4cae-90ca-64f78314025e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter3-SharingDataBetweenThreads">
+      <UniqueIdentifier>{1fc81020-61d6-466d-be47-f908194ae211}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +51,12 @@
     <ClCompile Include="..\Coroutine-Example\trace_coroutine.cpp">
       <Filter>Coroutine-Example</Filter>
     </ClCompile>
+    <ClCompile Include="..\Coroutine-Example\example_test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.cpp">
+      <Filter>Chapter3-SharingDataBetweenThreads</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h">
@@ -66,6 +75,24 @@
       <Filter>Coroutine-Example</Filter>
     </ClInclude>
     <ClInclude Include="..\Coroutine-Example\trace_coroutine.h">
+      <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.h">
+      <Filter>Chapter3-SharingDataBetweenThreads</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\manual_lifetime.h">
+      <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\new_thread_executor.h">
+      <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\sync_wait.h">
+      <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\task.h">
+      <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Coroutine-Example\generator.h">
       <Filter>Coroutine-Example</Filter>
     </ClInclude>
   </ItemGroup>
