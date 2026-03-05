@@ -7,6 +7,8 @@
 
 #include "../Chapter3-SharingDataBetweenThreads/SharingDataBetweenThreads.h"
 
+#include "../Chapter4-SynchronizingConcurrentOperation/SychronizingConCurrentOperation.h"
+
 #include "../Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes/MemoryModelBasics.h"
 #include "../Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes/AtomicOperationsAndTypesInCpp.h"
 
@@ -22,6 +24,8 @@ int main() {
 	hello_concurrency_world_example();
 	// chapter2
 	managing_threads_example();
+	// chapter3
+	sharing_data_between_threads_example();
 	// coroutine example
 	co_await_example();
 	hello_coroutine_example();
@@ -31,8 +35,8 @@ int main() {
 	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
 #else
-	// chapter3
-	sharing_data_between_threads_example();
+	// chapter4
+	synchronzing_concurrent_operation_example();
 #endif
 
 	return 0;

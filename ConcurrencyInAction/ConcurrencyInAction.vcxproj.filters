@@ -28,6 +28,9 @@
     <Filter Include="Chapter3-SharingDataBetweenThreads">
       <UniqueIdentifier>{1fc81020-61d6-466d-be47-f908194ae211}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter4-SynchronizingConcurrentOperation">
+      <UniqueIdentifier>{4d20fd98-4a24-4954-ac8c-26e23dfd7f6c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -56,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="..\Coroutine-Example\example_test.cpp">
       <Filter>Coroutine-Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.cpp">
+      <Filter>Chapter4-SynchronizingConcurrentOperation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +100,9 @@
     </ClInclude>
     <ClInclude Include="..\Coroutine-Example\generator.h">
       <Filter>Coroutine-Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.h">
+      <Filter>Chapter4-SynchronizingConcurrentOperation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
