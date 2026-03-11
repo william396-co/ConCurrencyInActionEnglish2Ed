@@ -129,6 +129,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\ATM_example\atm.cpp" />
+    <ClCompile Include="..\ATM_example\messaging.cpp" />
     <ClCompile Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.cpp" />
     <ClCompile Include="..\Chapter2-ManagingThreads\BasicThreadManagement.cpp" />
     <ClCompile Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.cpp" />
@@ -141,6 +143,11 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\ATM_example\atm.h" />
+    <ClInclude Include="..\ATM_example\atm_message.h" />
+    <ClInclude Include="..\ATM_example\bank.h" />
+    <ClInclude Include="..\ATM_example\interface_machine.h" />
+    <ClInclude Include="..\ATM_example\messaging.h" />
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h" />
     <ClInclude Include="..\Chapter2-ManagingThreads\BasicThreadManagement.h" />
     <ClInclude Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.h" />

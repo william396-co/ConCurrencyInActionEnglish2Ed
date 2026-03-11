@@ -31,6 +31,9 @@
     <Filter Include="Chapter4-SynchronizingConcurrentOperation">
       <UniqueIdentifier>{4d20fd98-4a24-4954-ac8c-26e23dfd7f6c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ATM_Example">
+      <UniqueIdentifier>{0cff1707-7418-4736-bb51-9a651229fec8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +65,12 @@
     </ClCompile>
     <ClCompile Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.cpp">
       <Filter>Chapter4-SynchronizingConcurrentOperation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ATM_example\atm.cpp">
+      <Filter>ATM_Example</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ATM_example\messaging.cpp">
+      <Filter>ATM_Example</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,21 @@
     </ClInclude>
     <ClInclude Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.h">
       <Filter>Chapter4-SynchronizingConcurrentOperation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ATM_example\atm.h">
+      <Filter>ATM_Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ATM_example\atm_message.h">
+      <Filter>ATM_Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ATM_example\bank.h">
+      <Filter>ATM_Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ATM_example\interface_machine.h">
+      <Filter>ATM_Example</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ATM_example\messaging.h">
+      <Filter>ATM_Example</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

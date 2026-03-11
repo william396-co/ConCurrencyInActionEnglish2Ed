@@ -16,6 +16,8 @@
 #include "../Coroutine-Example/trace_coroutine.h"
 #include "../Coroutine-Example/generator.h"
 
+#include "../atm_example/atm.h"
+
 
 int main() {
 
@@ -31,12 +33,14 @@ int main() {
 	hello_coroutine_example();
 	trace_coroutine_example();
 	generator_test();
+
+	// chapter4
+	synchronzing_concurrent_operation_example();
 	// chapter5
 	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
 #else
-	// chapter4
-	synchronzing_concurrent_operation_example();
+	atm_run_example();
 #endif
 
 	return 0;
