@@ -54,6 +54,8 @@ public:
 		}
 		catch (messaging::close_queue const&)
 		{
+			std::lock_guard lk(iom);
+			std::cout << "bank machine close_queue\n";
 		}
 	}
 private:

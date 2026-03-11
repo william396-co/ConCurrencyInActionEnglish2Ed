@@ -4,6 +4,9 @@
 #include "atm_message.h"
 
 #include <functional>
+#include <iostream>
+
+extern std::mutex iom;
 
 class atm {
 public:
@@ -28,6 +31,8 @@ public:
 		}
 		catch (messaging::close_queue const&) {
 
+			std::lock_guard lk(iom);
+			std::cout << "atm close_queue\n";
 		}
 	}
 
