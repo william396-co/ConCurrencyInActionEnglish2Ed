@@ -34,13 +34,13 @@ int main() {
 	trace_coroutine_example();
 	generator_test();
 
-	// chapter4
-	synchronzing_concurrent_operation_example();
+	atm_run_example();
 	// chapter5
 	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
 #else
-	atm_run_example();
+	// chapter4
+	synchronzing_concurrent_operation_example();
 #endif
 
 	return 0;

@@ -15,6 +15,8 @@
 #include <cmath>
 #include <list>
 #include <type_traits>
+#include <latch>
+#include <barrier>
 
 
 // 4.1 Waiting for an event or other condition
@@ -503,9 +505,44 @@ namespace using_synchronization_of_operation_to_simplify_code {
 
 		// list 4.15 A simple implementation of ATM logic class
 		namespace list_4_15 {
-
+			// atm example by messaga-passing style code(detail see ATM_example)
 		}
 
+	}
+
+	// 4.4.3 Continuation-style concurrency with the Concurrency TS
+	namespace contiuation_style_concurrency {}
+
+	// 4.4.7 Latches and barries in the Concurrency TS
+	namespace latches_and_barries {
+		// list 4.25 waiting for events with std::latch
+		namespace list_4_25 {
+			inline void do_more_stuff(int i) {
+				std::this_thread::sleep_for(std::chrono::milliseconds{ 300 });
+				std::cout << "do more stuff("<<i<<")\n";
+			}
+			inline void process_data(int* data, size_t thread_count) {
+				std::cout << "process data\n";
+			}
+			inline void foo() {
+				constexpr auto thread_count = 5;
+				std::latch done(thread_count);
+				int data[thread_count];
+				std::vector<std::future<void>> threads;
+				for (size_t i = 0;i != thread_count;++i) {
+					threads.emplace_back(std::async(std::launch::async,
+						[&, i]()
+						{
+							data[i] = i * i;
+							done.count_down();
+							do_more_stuff(i);
+						})
+						);
+				}
+				done.wait();
+				process_data(data,thread_count);
+			}
+		}
 	}
 }
 

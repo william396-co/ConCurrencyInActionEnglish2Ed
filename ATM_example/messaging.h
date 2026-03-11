@@ -5,9 +5,9 @@
 #include <queue>
 #include <memory>
 
+// Message-passing library
 namespace messaging {
 
-	// 
 	struct message_base {
 		virtual ~message_base(){}
 	};

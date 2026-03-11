@@ -370,5 +370,21 @@ void synchronzing_concurrent_operation_example() {
 				std::cout << "]\n";
 			}
 		}
+
+
+		// 4.4.3 Continuation-style concurrency with the Concurrency TS
+		{
+			using namespace contiuation_style_concurrency;
+
+		}
+
+		// 4.4.7 Latches and barries in the Concurrency TS
+		{
+			using namespace latches_and_barries;
+			{
+				using namespace list_4_25;
+				foo();
+			}
+		}
 	}
 }
