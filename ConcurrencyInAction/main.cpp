@@ -8,6 +8,7 @@
 #include "../Chapter3-SharingDataBetweenThreads/SharingDataBetweenThreads.h"
 
 #include "../Chapter4-SynchronizingConcurrentOperation/SychronizingConCurrentOperation.h"
+#include "../ATM_example/atm.h"
 
 #include "../Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes/MemoryModelBasics.h"
 #include "../Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes/AtomicOperationsAndTypesInCpp.h"
@@ -16,7 +17,7 @@
 #include "../Coroutine-Example/trace_coroutine.h"
 #include "../Coroutine-Example/generator.h"
 
-#include "../atm_example/atm.h"
+#include "../Chapter6-DesigningLockbasedConcurrentDataStructures/DesigningLockbasedConcurrentDataStructures.h"
 
 
 int main() {
@@ -35,12 +36,14 @@ int main() {
 	generator_test();
 
 	atm_run_example();
+	// chapter4
+	synchronzing_concurrent_operation_example();
 	// chapter5
 	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
 #else
-	// chapter4
-	synchronzing_concurrent_operation_example();
+	// chapter6
+	desiging_lockbased_concurrent_data_structure_example();
 #endif
 
 	return 0;
