@@ -58,6 +58,45 @@ namespace waiting_for_one_off_events_with_futures {
 		}
 	}
 }
+
+// 4.3 Waiting with a time limit
+namespace waiting_with_a_time_limit {
+
+	namespace time_points 
+	{
+		std::condition_variable cv;
+		std::mutex mtx;
+		bool done{ false };
+		bool wait_loop() {
+			auto const& timeout = std::chrono::steady_clock::now()
+				+ std::chrono::milliseconds{ 500 };
+			std::unique_lock lk(mtx);
+			while (!done) {
+				if (cv.wait_until(lk, timeout) == std::cv_status::timeout) {
+					break;
+				}
+			}
+			return done;
+		}
+		void set_done() {
+			std::this_thread::sleep_for(std::chrono::milliseconds{ 360 });
+			done = true;
+			std::cout << "set done\n";
+		}
+	}
+
+	namespace functions_that_accept_timeouts
+	{
+
+	}
+}
+
+
+// 4.4 Using Synchronization of operations to simplify code
+namespace using_synchronization_of_operation_to_simplify_code {
+
+}
+
 void synchronzing_concurrent_operation_example() {
 	
 	// 4.1 Waiting for an event or other condition
@@ -128,17 +167,17 @@ void synchronzing_concurrent_operation_example() {
 				auto f3 = std::async(Y(), 3.14);
 
 				auto f4 = std::async(std::ref(y), 2.17);
-				
+
 				std::async(baz, std::ref(x));
 
 				auto f5 = std::async(move_only());
 
 #if 0
-				f5.get();	
+				f5.get();
 				f4.get();
 				f3.get();
 				f2.get();
-				f1.get();	
+				f1.get();
 #endif
 
 				auto f6 = std::async(std::launch::async, Y(), 1.2);
@@ -157,9 +196,9 @@ void synchronzing_concurrent_operation_example() {
 			{
 				using namespace list_4_9;
 				std::thread gui_bg_thread(gui_thread);
-							
+
 				std::thread post_message_thread(
-					[] (){
+					[]() {
 						while (!gui_shutdown_message_recieved) {
 							post_task_for_gui_thread([]() {
 								auto i = rand() % 100;
@@ -169,7 +208,7 @@ void synchronzing_concurrent_operation_example() {
 								}
 								std::this_thread::sleep_for(std::chrono::milliseconds{ 300 });
 								});
-						}					
+						}
 					});
 				post_message_thread.join();
 				gui_bg_thread.join();
@@ -203,6 +242,149 @@ void synchronzing_concurrent_operation_example() {
 			std::shared_future<int> sf(std::move(f));
 			//assert(f.valid());//fire
 			assert(sf.valid());
+
+			std::promise<std::string> sp;
+			std::shared_future<std::string> sf2(sp.get_future());
+
+			std::promise<std::unordered_map<uint32_t, std::string>> pm;
+			auto sf3 = pm.get_future().share();
+
+		}
+	}
+
+	// 4.3 Waiting with a time limit
+	{
+		using namespace waiting_with_a_time_limit;
+		using namespace std::chrono;
+		using namespace std::chrono_literals;
+		// 4.3.1 Clocks
+		{
+			auto now = system_clock::now();// system_clock use for timestamp
+
+			std::cout << "now:" << now << "\n";
+
+			auto t1 = steady_clock::now();	//steady clock use for time cost between two event
+			std::this_thread::sleep_for(milliseconds{ 324 });
+			auto t2 = steady_clock::now();
+			std::cout << "use time:" <<
+				duration_cast<milliseconds>(t2 - t1) << " millseconds\n";
+		}
+
+		// 4.3.2 Durations
+		{
+			using namespace duration;
+			auto now = steady_clock::now();
+			auto one_day = 24h;
+			auto half_an_hour = 30min;
+			auto max_time_between_message = 30ms;
+
+			std::cout << "24hour later: " << now.time_since_epoch() + one_day << "\n";
+			std::cout << "half an hour later: " << now.time_since_epoch() + half_an_hour << "\n";
+			std::cout << "30 millisecond later: " << now.time_since_epoch() + max_time_between_message << "\n";
+
+			std::chrono::milliseconds ms(54802);
+			auto s = duration_cast<seconds>(ms);
+			std::cout << "second=" << s << "\n";
+
+
+			// you can wait for up to 35 milliseconds for a future be ready
+			std::future<int> f = std::async(some_task);
+			auto status = f.wait_for(milliseconds(35));
+			if (status == std::future_status::ready) {
+				do_some_thing_with(f.get());
+			}
+			else
+			{
+				std::cout << "future_status=" << (int)status << "\n";
+			}
+		}
+		// 4.3.3 Time points
+		{
+			using namespace time_points;
+
+			auto start = high_resolution_clock::now();
+			std::this_thread::sleep_for(milliseconds{ 300 });
+			// do something
+			auto stop = high_resolution_clock::now();
+			std::cout << "do something() took "
+				<< duration_cast<milliseconds>(stop - start).count()
+				<< " milliseconds\n";
+
+			auto f = std::async(wait_loop);			
+			std::thread t2(set_done);			
+			t2.join();
+
+			auto ret = f.get();
+			std::cout << std::boolalpha << "ret=" << ret << "\n";
+		}
+		// 4.3.4 Functions that accept timeouts
+		{
+			using namespace functions_that_accept_timeouts;
+
+			std::this_thread::sleep_for(std::chrono::milliseconds{ 30 });
+
+			std::cout << "first wake up\n";
+			
+			std::this_thread::sleep_until(std::chrono::steady_clock::now() + std::chrono::milliseconds{ 500 });
+			std::cout << "second wake up\n";
+		}
+	}
+
+	// 4.4 Using Synchronization of operations to simplify code
+	{
+		using namespace using_synchronization_of_operation_to_simplify_code;
+
+		// 4.4.1 Functional programming with futures
+		{
+			using namespace function_programming_with_futures;
+
+			{
+				using namespace list_4_12;
+				std::list<int> input = { 5,7,3,4,1,9,2,8,8,10,6 };
+				std::cout << "before sort:[";
+				for (auto const& i : input) {
+					std::cout << i << "\t";
+				}
+				std::cout << "]\n";
+				auto res = sequential_quick_sort(input);
+				std::cout << "after sort:[";
+				for (auto const& i : res) {
+					std::cout << i << "\t";
+				}
+				std::cout << "]\n";
+			}
+			{
+
+				using namespace list_4_13;
+				std::list<int> input = { 5,7,3,4,1,9,2,8,8,10,6 };
+				std::cout << "before sort:[";
+				for (auto const& i : input) {
+					std::cout << i << "\t";
+				}
+				std::cout << "]\n";
+				auto res = parallel_quick_sort(input);
+				std::cout << "after sort:[";
+				for (auto const& i : res) {
+					std::cout << i << "\t";
+				}
+				std::cout << "]\n";
+			}
+		}
+
+
+		// 4.4.3 Continuation-style concurrency with the Concurrency TS
+		{
+			using namespace contiuation_style_concurrency;
+
+		}
+
+		// 4.4.7 Latches and barries in the Concurrency TS
+		{
+			using namespace latches_and_barries;
+			{
+				using namespace list_4_25;
+				foo();
+			}
 		}
 	}
 }

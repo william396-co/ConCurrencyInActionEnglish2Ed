@@ -13,6 +13,10 @@
 #include <set>
 #include <exception>
 #include <cmath>
+#include <list>
+#include <type_traits>
+#include <latch>
+#include <barrier>
 
 
 // 4.1 Waiting for an event or other condition
@@ -383,5 +387,163 @@ namespace waiting_for_one_off_events_with_futures{
 
 	}
 } 
+
+
+// 4.3 Waiting with a time limit
+namespace waiting_with_a_time_limit {
+
+	// 4.3.1 Clocks
+	// 4.3.2 Durations
+	namespace duration {
+		inline int some_task() {
+			std::cout << "[" << std::chrono::system_clock::now() << "]start some task()\n";
+			std::this_thread::sleep_for(std::chrono::milliseconds{ 200 });
+			return 42;
+		}
+
+		inline void do_some_thing_with(int x) {
+			auto millisecond = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+			std::cout << "[" << std::chrono::system_clock::now() << "]do something with(" << x << ")\n";
+		}
+	}
+	// 4.3.3 Time points
+	namespace time_points
+	{
+		extern std::condition_variable cv;
+		extern std::mutex mtx;
+		extern bool done;
+		bool wait_loop();
+		void set_done();
+	}
+
+	// 4.3.4 Functions that accept timeouts
+	namespace functions_that_accept_timeouts {
+
+	}
+}
+
+// 4.4 Using Synchronization of operations to simplify code
+namespace using_synchronization_of_operation_to_simplify_code {
+
+	// 4.4.1 Functional programming with futures
+	namespace function_programming_with_futures {
+
+		// list 4.12 A Sequential implementation of Quicksort
+		namespace list_4_12 {
+			template<typename T>
+			std::list<T> sequential_quick_sort(std::list<T> input) {
+				if (input.empty())return {};
+
+				std::list<T> result;
+				result.splice(result.begin(), input, input.begin());
+				T const& pivot = *result.begin();
+
+				auto divide_point = std::partition(input.begin(), input.end(),
+					[&](T const& t) {return t < pivot;});
+
+				std::list<T> lower_part;
+				lower_part.splice(lower_part.end(), input, input.begin(), divide_point);
+
+				auto new_lower(sequential_quick_sort(std::move(lower_part)));
+				auto new_higher(sequential_quick_sort(std::move(input)));
+
+				result.splice(result.end(), new_higher);
+				result.splice(result.begin(), new_lower);
+				return result;
+			}
+		}
+
+		// list 4.13 Parallel Quicksor using futures
+		namespace list_4_13 {
+			template<typename T>
+			std::list<T> parallel_quick_sort(std::list<T> input) {
+				if (input.empty())return {};
+
+				std::list<T> result;
+				result.splice(result.begin(), input, input.begin());
+				T const& pivot = *result.begin();
+
+				auto divide_point = std::partition(input.begin(), input.end(),
+					[&](T const& t) {return t < pivot;});
+
+				std::list<T> lower_part;
+				lower_part.splice(lower_part.end(), input, input.begin(), divide_point);
+
+				std::future<std::list<T>> new_lower(
+					std::async(&parallel_quick_sort<T>,std::move(lower_part)));
+
+				auto new_higher(parallel_quick_sort(std::move(input)));
+
+				result.splice(result.end(), new_higher);
+				result.splice(result.begin(), new_lower.get());
+				return result;
+			}
+		}
+
+		// list 4.14 A sample implementation of spawn_task
+		namespace list_4_14 
+		{
+#if 0
+			template<typename F,typename... Args>
+			std::future<std::invoke_result_t<F,Args...>>
+				spawn_task(F&& f, Args&&... args) {
+				using result_type = std::invoke_result_t<F, Args...>;
+				std::packaged_task<result_type(Args&&)...> task(std::move(f));
+
+				std::future<result_type> res(task.get_future());
+				std::thread t(std::move(task), std::move(args)...);
+				t.detach();
+				return res;
+			}
+#endif
+		}
+	}
+
+	//Communicating Sequential Process(CSP)
+	// 4.4.2 Synchronizing with message passing
+	namespace synchronizing_wiht_message_passing {
+
+		// list 4.15 A simple implementation of ATM logic class
+		namespace list_4_15 {
+			// atm example by messaga-passing style code(detail see ATM_example)
+		}
+
+	}
+
+	// 4.4.3 Continuation-style concurrency with the Concurrency TS
+	namespace contiuation_style_concurrency {}
+
+	// 4.4.7 Latches and barries in the Concurrency TS
+	namespace latches_and_barries {
+		// list 4.25 waiting for events with std::latch
+		namespace list_4_25 {
+			inline void do_more_stuff(int i) {
+				std::this_thread::sleep_for(std::chrono::milliseconds{ 300 });
+				std::cout << "do more stuff("<<i<<")\n";
+			}
+			inline void process_data(int* data, size_t thread_count) {
+				std::cout << "process data\n";
+			}
+			inline void foo() {
+				constexpr auto thread_count = 5;
+				std::latch done(thread_count);
+				int data[thread_count];
+				std::vector<std::future<void>> threads;
+				for (size_t i = 0;i != thread_count;++i) {
+					threads.emplace_back(std::async(std::launch::async,
+						[&, i]()
+						{
+							data[i] = i * i;
+							done.count_down();
+							do_more_stuff(i);
+						})
+						);
+				}
+				done.wait();
+				process_data(data,thread_count);
+			}
+		}
+	}
+}
 
 void synchronzing_concurrent_operation_example();
