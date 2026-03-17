@@ -19,6 +19,7 @@
 
 #include "../Chapter6-DesigningLockbasedConcurrentDataStructures/DesigningLockbasedConcurrentDataStructures.h"
 
+#include "../Chapter7-DesigningLockFreeConcurrentDataStructures/DesigningLockFreeConcurrentDataStructures.h"
 
 int main() {
 
@@ -41,9 +42,14 @@ int main() {
 	// chapter5
 	memory_model_basics_example();
 	atomic_op_types_in_cpp_example();
-#else
+
 	// chapter6
 	desiging_lockbased_concurrent_data_structure_example();
+#else
+	// chapter7
+
+	// chapter6
+	desiging_lockfree_concurrent_data_structure_example();
 #endif
 
 	return 0;

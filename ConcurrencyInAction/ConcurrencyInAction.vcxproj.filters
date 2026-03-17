@@ -37,6 +37,9 @@
     <Filter Include="Chapter6-DesigningLockbasedConcurrentDataStructures">
       <UniqueIdentifier>{d007d36a-ad90-48dd-b0f9-a1ab572ca62f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter7-DesigningLockFreeConcurrentDataStructures">
+      <UniqueIdentifier>{3eaf53b0-7697-4313-91a3-1b9a0d50b999}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.cpp">
       <Filter>Chapter6-DesigningLockbasedConcurrentDataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.cpp">
+      <Filter>Chapter7-DesigningLockFreeConcurrentDataStructures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.h">
       <Filter>Chapter6-DesigningLockbasedConcurrentDataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.h">
+      <Filter>Chapter7-DesigningLockFreeConcurrentDataStructures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

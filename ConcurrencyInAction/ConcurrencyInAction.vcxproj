@@ -138,6 +138,7 @@
     <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.cpp" />
     <ClCompile Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.cpp" />
     <ClCompile Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.cpp" />
+    <ClCompile Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.cpp" />
     <ClCompile Include="..\Coroutine-Example\example_test.cpp" />
     <ClCompile Include="..\Coroutine-Example\hello-coroutine.cpp" />
     <ClCompile Include="..\Coroutine-Example\trace_coroutine.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\AtomicOperationsAndTypesInCpp.h" />
     <ClInclude Include="..\Chapter5-TheCppMemoryModelAndOperationOnAtomicTypes\MemoryModelBasics.h" />
     <ClInclude Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.h" />
+    <ClInclude Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.h" />
     <ClInclude Include="..\Coroutine-Example\generator.h" />
     <ClInclude Include="..\Coroutine-Example\hello-coroutine.h" />
     <ClInclude Include="..\Coroutine-Example\manual_lifetime.h" />
