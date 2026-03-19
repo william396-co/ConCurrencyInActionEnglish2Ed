@@ -40,6 +40,9 @@
     <Filter Include="Chapter7-DesigningLockFreeConcurrentDataStructures">
       <UniqueIdentifier>{3eaf53b0-7697-4313-91a3-1b9a0d50b999}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter8-DesigingConcurrentCode">
+      <UniqueIdentifier>{6c3cb133-43a3-4ee9-8f16-686b4077b7ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.cpp">
       <Filter>Chapter7-DesigningLockFreeConcurrentDataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.cpp">
+      <Filter>Chapter8-DesigingConcurrentCode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.h">
       <Filter>Chapter7-DesigningLockFreeConcurrentDataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.h">
+      <Filter>Chapter8-DesigingConcurrentCode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
