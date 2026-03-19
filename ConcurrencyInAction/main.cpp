@@ -47,8 +47,6 @@ int main() {
 	desiging_lockbased_concurrent_data_structure_example();
 #else
 	// chapter7
-
-	// chapter6
 	desiging_lockfree_concurrent_data_structure_example();
 #endif
 
