@@ -50,7 +50,7 @@ int main() {
 	desiging_lockfree_concurrent_data_structure_example();
 #else
 	// chapter8 
-	desiging_concurrent_code_example();
+	designing_concurrent_code_example();
 #endif
 
 	return 0;
