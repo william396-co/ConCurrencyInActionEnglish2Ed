@@ -540,29 +540,29 @@ namespace designing_concurrent_code {
 							try
 							{
 								Iterator end = last;
-								++end;
+								++end;// +1
 								std::partial_sum(begin, end, begin);
-								if (previous_end_value) {
+								if (previous_end_value) {// not first chunk
 									const value_type& addend = previous_end_value->get();
-									*last += addend;
+									*last += addend;// add last first, 
 									if (end_value) {
-										end_value->set_value(*last);
+										end_value->set_value(*last);// then store the future first
 									}
 									std::for_each(begin, last, [addend](value_type& item) {
 										item += addend;
 										});
 								}
-								else if (end_value) {
+								else if (end_value) {// first chunk
 									end_value->set_value(*last);
 								}
 							}
 							catch (...)
 							{
-								if (end_value) {
+								if (end_value) {// propagate exception to next chunk
 									end_value->set_exception(std::current_exception());
 								}
 								else {
-									throw;
+									throw;// finally rethrow the propagate exception
 								}
 							}
 						}
@@ -586,7 +586,7 @@ namespace designing_concurrent_code {
 					Iterator block_start = first;
 					for (unsigned long i = 0; i < num_threads - 1;++i) {
 						Iterator block_last = block_start;
-						std::advance(block_last, block_size - 1);
+						std::advance(block_last, block_size - 1);// -1
 						threads[i] = std::thread(process_chunk(), block_start, block_last,
 							0 != i ? &previous_end_values[i - 1] : 0, &end_values[i]);
 						block_start = block_last;
@@ -595,7 +595,7 @@ namespace designing_concurrent_code {
 					}
 
 					Iterator final_element = block_start;
-					std::advance(final_element, std::distance(block_start, last) - 1);
+					std::advance(final_element, std::distance(block_start, last) - 1);// -1
 					process_chunk()(block_start, final_element, (num_threads > 1) ? &previous_end_values.back() : 0, 0);
 				}
 			}
