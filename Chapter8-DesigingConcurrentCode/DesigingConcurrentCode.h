@@ -12,6 +12,9 @@
 #include <numeric>
 
 namespace designing_concurrent_code {
+
+	extern std::mutex iom;
+
 	class join_threads {
 	public:
 		explicit join_threads(std::vector<std::thread>& threads_) :threads{ threads_ } {
@@ -344,26 +347,259 @@ namespace designing_concurrent_code {
 	// 8.5 Designing concurrent code in practice
 	namespace designing_concurrent_code_in_practice {
 
-		// list 8.7 A parallel version of std::for_each
-		namespace list_8_7 {
-			template<typename Iterator,typename Func>
-			void parallel_for_each(Iterator first, Iterator last, Func f) {
+		// 8.5.1 A parallel implementation of std::for_each
+		namespace parallel_impl_of_for_each {
 
-				unsigned long length = std::advance(first, last);
-				if (!length)return;
+			// list 8.7 A parallel version of std::for_each
+			namespace list_8_7 {
+				template<typename Iterator, typename Func>
+				void parallel_for_each(Iterator first, Iterator last, Func f) {
 
-				unsigned long const min_per_thread = 25;
-				unsigned long const max_threads = (length + min_per_thread - 1) / min_per_thread;
-				unsigned long const hardware_threads = std::thread::hardware_concurrency();
-				unsigned long const num_threads = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
+					unsigned long const length = std::distance(first, last);
+					if (!length)return;
 
-				unsigned long const block_size = length / num_threads;
-				std::vector<std::future<void>> futures(num_threads - 1);
-				std::vector<std::thread> threads(num_threads - 1);
-				
+					unsigned long const min_per_thread = 25;
+					unsigned long const max_threads = (length + min_per_thread - 1) / min_per_thread;
+					unsigned long const hardware_threads = std::thread::hardware_concurrency();
+					unsigned long const num_threads = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
 
+					unsigned long const block_size = length / num_threads;
+					std::vector<std::future<void>> futures(num_threads - 1);
+					std::vector<std::thread> threads(num_threads - 1);
 
+					Iterator block_start = first;
+					for (unsigned i = 0;i < (num_threads - 1);++i) {
+						Iterator block_end = block_start;
+						std::advance(block_end, block_size);
+						std::packaged_task<void()> task{
+							[=]() {
+								std::for_each(block_start,block_end,f);
+							}
+						};
+
+						futures[i] = task.get_future();
+						threads[i] = std::thread(std::move(task));
+						block_start = block_end;
+					}
+
+					std::for_each(block_start, last, f);
+					for (unsigned i = 0; i < (num_threads - 1);++i)
+					{
+						futures[i].get();
+					}
+				}
 			}
+
+			// list 8.8 A parallel version of std::for_each using std::async
+			namespace list_8_8 {
+				template<typename Iterator, typename Func>
+				void parallel_for_each(Iterator first, Iterator last, Func f) {
+					unsigned long const length = std::distance(first, last);
+					if (!length)return;
+
+					unsigned long const min_per_thread = 25;
+					if (length < (2 * min_per_thread)) {
+						std::for_each(first, last, f);
+					}
+					else {
+						Iterator const mid_point = first + length / 2;
+						std::future<void> first_half =
+							std::async(&parallel_for_each<Iterator, Func>, first, mid_point, f);
+						parallel_for_each(mid_point, last, f);
+						first_half.get();
+					}
+				}
+			}
+		}
+
+		// 8.5.2 A parallel implementation of std::find
+		namespace parallel_impl_of_find {
+
+			// list 8.9 An implementation of a parallel find algorithm
+			namespace list_8_9 {
+				template<typename Iterator,typename MatchType>
+				Iterator parallel_find(Iterator first, Iterator last, MatchType match) {
+
+					struct find_element {
+						void operator()(Iterator begin, Iterator end, MatchType match,
+							std::promise<Iterator>* result,std::atomic<bool>* done_flag) {
+							try
+							{
+								for (;begin != end && !done_flag->load();++begin) {
+									if (*begin == match) {
+										result->set_value(begin);
+										done_flag->store(true);
+										return;
+									}
+								}
+							}
+							catch (...)
+							{
+								try
+								{
+									result->set_exception(std::current_exception());
+									done_flag->store(true);
+								}
+								catch (...)
+								{
+
+								}
+							}
+						}
+					};
+
+					unsigned long const length = std::distance(first, last);
+					if (!length)return last;
+					
+					unsigned long const min_per_thread = 25;
+					unsigned long const max_threads = (length + min_per_thread - 1) / min_per_thread;
+					unsigned long const hardware_threads = std::thread::hardware_concurrency();
+					unsigned long const num_threads = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
+
+					unsigned long const block_size = length / num_threads;
+					std::promise<Iterator> result;
+					std::atomic<bool> done_flag(false);
+					std::vector<std::thread> threads(num_threads - 1); 
+					{
+						join_threads joiner(threads);
+						Iterator block_start = first;
+						for (unsigned long i = 0; i != num_threads - 1;++i) {
+							Iterator block_end = block_start;
+							std::advance(block_end, block_size);
+							threads[i] = std::thread(find_element(), block_start, block_end, match, &result, &done_flag);
+							block_start = block_end;
+						}
+						find_element()(block_start, last, match, &result, &done_flag);
+						if (!done_flag.load()) {//Not found match
+							return last;
+						}
+						return result.get_future().get();
+					}
+				}
+			}
+
+			// list 8.10 An implementation of a parallel find algorithm using std::async
+			namespace list_8_10 {
+				template<typename Iterator, typename MatchType>
+				Iterator parallel_find_impl(Iterator first, Iterator last, MatchType match, std::atomic<bool>& done) {
+
+					try
+					{
+						unsigned long const length = std::distance(first, last);
+						unsigned long const min_per_thread = 2500000;
+						if (length < 2 * min_per_thread) {
+							for (;first != last && !done.load();++first) {
+								if (*first == match) {
+									done = true;
+									return first;
+								}
+							}
+							return last;// not found
+						}
+						else {
+							Iterator const mid_point = first + (length / 2);
+							std::future<Iterator> async_result =
+								std::async(parallel_find_impl<Iterator, MatchType>,	mid_point, last, match, std::ref(done));
+
+								Iterator const direct_result = parallel_find_impl(first, mid_point, match, done);
+								// if direct_result equal to mid_point, means not found,
+								// try to get result from async_result
+								return direct_result == mid_point ? async_result.get() : direct_result;
+						}
+					}
+					catch (...)
+					{
+						done = true;
+						throw;
+					}
+				}
+
+				template<typename Iterator,typename MatchType>
+				Iterator parallel_find(Iterator first, Iterator last, MatchType match) {
+					std::atomic<bool> done{ false };
+					return parallel_find_impl(first, last, match, done);
+				}
+			}
+		}	
+		// 8.5.3 A parallel implementation of std::partial_sum
+		namespace parallel_impl_of_partial_sum {
+
+			// list 8.11 Calculating partial sums in parallel by dividing the problem
+			namespace list_8_11 {
+
+				template<typename Iterator>
+				void parallel_partial_sum(Iterator first, Iterator last) {
+
+					using value_type = typename Iterator::value_type;
+					struct process_chunk {
+
+						void operator()(Iterator begin, Iterator last,
+							std::future<value_type>* previous_end_value,
+							std::promise<value_type>* end_value) {
+
+							try
+							{
+								Iterator end = last;
+								++end;
+								std::partial_sum(begin, end, begin);
+								if (previous_end_value) {
+									const value_type& addend = previous_end_value->get();
+									*last += addend;
+									if (end_value) {
+										end_value->set_value(*last);
+									}
+									std::for_each(begin, last, [addend](value_type& item) {
+										item += addend;
+										});
+								}
+								else if (end_value) {
+									end_value->set_value(*last);
+								}
+							}
+							catch (...)
+							{
+								if (end_value) {
+									end_value->set_exception(std::current_exception());
+								}
+								else {
+									throw;
+								}
+							}
+						}
+					};
+
+					unsigned long const length = std::distance(first, last);
+					if (!length)return;
+
+					unsigned long const min_per_thread = 25;
+					unsigned long const max_threads = (length + min_per_thread - 1) / min_per_thread;
+					unsigned long const hardware_threads = std::thread::hardware_concurrency();
+					unsigned long const num_threads = std::min(hardware_threads != 0 ? hardware_threads : 2, max_threads);
+					unsigned long const block_size = length / num_threads;
+
+					std::vector<std::thread> threads(num_threads - 1);
+					std::vector<std::promise<value_type>> end_values(num_threads - 1);
+					std::vector<std::future<value_type>> previous_end_values;
+
+					join_threads joiner(threads);
+					previous_end_values.reserve(num_threads - 1);
+					Iterator block_start = first;
+					for (unsigned long i = 0; i < num_threads - 1;++i) {
+						Iterator block_last = block_start;
+						std::advance(block_last, block_size - 1);
+						threads[i] = std::thread(process_chunk(), block_start, block_last,
+							0 != i ? &previous_end_values[i - 1] : 0, &end_values[i]);
+						block_start = block_last;
+						++block_start;
+						previous_end_values.push_back(end_values[i].get_future());
+					}
+
+					Iterator final_element = block_start;
+					std::advance(final_element, std::distance(block_start, last) - 1);
+					process_chunk()(block_start, final_element, (num_threads > 1) ? &previous_end_values.back() : 0, 0);
+				}
+			}
+
 		}
 	}
 }
