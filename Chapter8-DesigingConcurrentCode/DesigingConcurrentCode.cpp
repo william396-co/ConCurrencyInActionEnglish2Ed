@@ -142,6 +142,17 @@ void designing_concurrent_code_example() {
 				using namespace parallel_impl_of_partial_sum;
 				{
 					using namespace list_8_11;
+#if 0
+					parallel_partial_sum(vi.begin(), vi.end());
+					for (auto const& i : vi) {
+						std::cout << i << "\t";
+					}
+					std::cout << "\n";
+#endif
+				}
+				{
+					using namespace list_8_13;
+					std::vector<size_t> vi = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17};
 					parallel_partial_sum(vi.begin(), vi.end());
 					for (auto const& i : vi) {
 						std::cout << i << "\t";
