@@ -162,6 +162,8 @@
     <ClInclude Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.h" />
     <ClInclude Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.h" />
     <ClInclude Include="..\Chpater9-AdvancedThreadManagement\AdvancedThreadManagement.h" />
+    <ClInclude Include="..\Common\join_thread.h" />
+    <ClInclude Include="..\Common\threadsafe_queue.h" />
     <ClInclude Include="..\Coroutine-Example\generator.h" />
     <ClInclude Include="..\Coroutine-Example\hello-coroutine.h" />
     <ClInclude Include="..\Coroutine-Example\manual_lifetime.h" />

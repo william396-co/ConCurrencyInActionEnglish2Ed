@@ -46,6 +46,9 @@
     <Filter Include="Chpater9-AdvancedThreadManagement">
       <UniqueIdentifier>{78b048ac-64cb-442a-951b-24a7ec7c8f8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{286d1848-3fd0-443e-9e9a-92de7e04d295}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -163,6 +166,12 @@
     </ClInclude>
     <ClInclude Include="..\Chpater9-AdvancedThreadManagement\AdvancedThreadManagement.h">
       <Filter>Chpater9-AdvancedThreadManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\threadsafe_queue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\join_thread.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
