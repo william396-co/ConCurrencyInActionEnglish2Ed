@@ -18,9 +18,9 @@
 #include "../Coroutine-Example/generator.h"
 
 #include "../Chapter6-DesigningLockbasedConcurrentDataStructures/DesigningLockbasedConcurrentDataStructures.h"
-
 #include "../Chapter7-DesigningLockFreeConcurrentDataStructures/DesigningLockFreeConcurrentDataStructures.h"
 #include "../Chapter8-DesigingConcurrentCode/DesigingConcurrentCode.h"
+#include "../Chpater9-AdvancedThreadManagement/AdvancedThreadManagement.h"
 
 int main() {
 
@@ -48,9 +48,10 @@ int main() {
 	desiging_lockbased_concurrent_data_structure_example();
 	// chapter7
 	desiging_lockfree_concurrent_data_structure_example();
-#else
 	// chapter8 
 	designing_concurrent_code_example();
+#else
+	advanced_thread_management_example();
 #endif
 
 	return 0;

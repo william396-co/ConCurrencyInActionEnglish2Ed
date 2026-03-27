@@ -43,6 +43,9 @@
     <Filter Include="Chapter8-DesigingConcurrentCode">
       <UniqueIdentifier>{6c3cb133-43a3-4ee9-8f16-686b4077b7ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chpater9-AdvancedThreadManagement">
+      <UniqueIdentifier>{78b048ac-64cb-442a-951b-24a7ec7c8f8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.cpp">
       <Filter>Chapter8-DesigingConcurrentCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chpater9-AdvancedThreadManagement\AdvancedThreadManagement.cpp">
+      <Filter>Chpater9-AdvancedThreadManagement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.h">
       <Filter>Chapter8-DesigingConcurrentCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chpater9-AdvancedThreadManagement\AdvancedThreadManagement.h">
+      <Filter>Chpater9-AdvancedThreadManagement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
