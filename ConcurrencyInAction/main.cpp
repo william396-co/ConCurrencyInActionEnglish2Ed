@@ -20,7 +20,7 @@
 #include "../Chapter6-DesigningLockbasedConcurrentDataStructures/DesigningLockbasedConcurrentDataStructures.h"
 #include "../Chapter7-DesigningLockFreeConcurrentDataStructures/DesigningLockFreeConcurrentDataStructures.h"
 #include "../Chapter8-DesigingConcurrentCode/DesigingConcurrentCode.h"
-#include "../Chpater9-AdvancedThreadManagement/AdvancedThreadManagement.h"
+#include "../Chapter9-AdvancedThreadManagement/AdvancedThreadManagement.h"
 
 int main() {
 
