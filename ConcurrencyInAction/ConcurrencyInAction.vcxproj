@@ -140,7 +140,7 @@
     <ClCompile Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.cpp" />
     <ClCompile Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.cpp" />
     <ClCompile Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.cpp" />
-    <ClCompile Include="..\Chpater9-AdvancedThreadManagement\AdvancedThreadManagement.cpp" />
+    <ClCompile Include="..\Chapter9-AdvancedThreadManagement\AdvancedThreadManagement.cpp" />
     <ClCompile Include="..\Coroutine-Example\example_test.cpp" />
     <ClCompile Include="..\Coroutine-Example\hello-coroutine.cpp" />
     <ClCompile Include="..\Coroutine-Example\trace_coroutine.cpp" />
@@ -161,7 +161,7 @@
     <ClInclude Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.h" />
     <ClInclude Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.h" />
     <ClInclude Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.h" />
-    <ClInclude Include="..\Chpater9-AdvancedThreadManagement\AdvancedThreadManagement.h" />
+    <ClInclude Include="..\Chapter9-AdvancedThreadManagement\AdvancedThreadManagement.h" />
     <ClInclude Include="..\Common\join_thread.h" />
     <ClInclude Include="..\Common\threadsafe_queue.h" />
     <ClInclude Include="..\Coroutine-Example\generator.h" />
