@@ -21,6 +21,7 @@
 #include "../Chapter7-DesigningLockFreeConcurrentDataStructures/DesigningLockFreeConcurrentDataStructures.h"
 #include "../Chapter8-DesigingConcurrentCode/DesigingConcurrentCode.h"
 #include "../Chapter9-AdvancedThreadManagement/AdvancedThreadManagement.h"
+#include "../Chapter10-ParallelAlgorithm/ParallelAlgorithm.h"
 
 int main() {
 
@@ -50,8 +51,11 @@ int main() {
 	desiging_lockfree_concurrent_data_structure_example();
 	// chapter8 
 	designing_concurrent_code_example();
-#else
+	// chapter9
 	advanced_thread_management_example();
+#else
+	// chapter10
+	parallel_algorithm_example();
 #endif
 
 	return 0;

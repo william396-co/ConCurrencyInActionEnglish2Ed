@@ -49,6 +49,9 @@
     <Filter Include="Chapter9-AdvancedThreadManagement">
       <UniqueIdentifier>{78b048ac-64cb-442a-951b-24a7ec7c8f8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter10-ParallelAlgorithm">
+      <UniqueIdentifier>{83088c2a-2779-48c4-ba7b-26faeb776ce9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="..\Chapter9-AdvancedThreadManagement\AdvancedThreadManagement.cpp">
       <Filter>Chapter9-AdvancedThreadManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.cpp">
+      <Filter>Chapter10-ParallelAlgorithm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="..\Chapter9-AdvancedThreadManagement\AdvancedThreadManagement.h">
       <Filter>Chapter9-AdvancedThreadManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.h">
+      <Filter>Chapter10-ParallelAlgorithm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
