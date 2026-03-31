@@ -37,6 +37,21 @@
     <Filter Include="Chapter6-DesigningLockbasedConcurrentDataStructures">
       <UniqueIdentifier>{d007d36a-ad90-48dd-b0f9-a1ab572ca62f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter7-DesigningLockFreeConcurrentDataStructures">
+      <UniqueIdentifier>{3eaf53b0-7697-4313-91a3-1b9a0d50b999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chapter8-DesigingConcurrentCode">
+      <UniqueIdentifier>{6c3cb133-43a3-4ee9-8f16-686b4077b7ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{286d1848-3fd0-443e-9e9a-92de7e04d295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chapter9-AdvancedThreadManagement">
+      <UniqueIdentifier>{78b048ac-64cb-442a-951b-24a7ec7c8f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Chapter10-ParallelAlgorithm">
+      <UniqueIdentifier>{83088c2a-2779-48c4-ba7b-26faeb776ce9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +92,18 @@
     </ClCompile>
     <ClCompile Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.cpp">
       <Filter>Chapter6-DesigningLockbasedConcurrentDataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.cpp">
+      <Filter>Chapter7-DesigningLockFreeConcurrentDataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.cpp">
+      <Filter>Chapter8-DesigingConcurrentCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter9-AdvancedThreadManagement\AdvancedThreadManagement.cpp">
+      <Filter>Chapter9-AdvancedThreadManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.cpp">
+      <Filter>Chapter10-ParallelAlgorithm</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +163,24 @@
     </ClInclude>
     <ClInclude Include="..\Chapter6-DesigningLockbasedConcurrentDataStructures\DesigningLockbasedConcurrentDataStructures.h">
       <Filter>Chapter6-DesigningLockbasedConcurrentDataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter7-DesigningLockFreeConcurrentDataStructures\DesigningLockFreeConcurrentDataStructures.h">
+      <Filter>Chapter7-DesigningLockFreeConcurrentDataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter8-DesigingConcurrentCode\DesigingConcurrentCode.h">
+      <Filter>Chapter8-DesigingConcurrentCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\threadsafe_queue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\join_thread.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter9-AdvancedThreadManagement\AdvancedThreadManagement.h">
+      <Filter>Chapter9-AdvancedThreadManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.h">
+      <Filter>Chapter10-ParallelAlgorithm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

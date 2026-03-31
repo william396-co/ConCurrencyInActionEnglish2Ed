@@ -61,6 +61,7 @@ void desiging_lockbased_concurrent_data_structure_example() {
 				{
 					using namespace list_6_3;
 
+#if 0
 					threadsafe_queue<int> iQ;
 					std::thread process(process_queue<int>, std::ref(iQ));
 					std::thread consume(consume_queue<int>, std::ref(iQ));
@@ -69,8 +70,70 @@ void desiging_lockbased_concurrent_data_structure_example() {
 					process.join();
 					consume.join();
 					consume2.join();
+#endif
+				}
+				{
+					using namespace list_6_6;
+
+#if 0
+					threadsafe_queue<int> iQ;
+					std::thread process(process_queue<int>, std::ref(iQ));
+					std::thread consume(consume_queue<int>, std::ref(iQ));
+					std::thread consume2(consume_queue<int>, std::ref(iQ));
+					std::thread process2(process_queue<int>, std::ref(iQ));
+
+					process.join();
+					process2.join();
+					consume.join();
+					consume2.join();
+#endif
+				}
+				{
+
+					using namespace list_6_7;
+
+#if 0
+					threadsafe_queue<int> iQ;
+					std::thread process(process_queue<int>, std::ref(iQ));
+					std::thread consume(consume_queue<int>, std::ref(iQ));
+					std::thread consume2(consume_queue<int>, std::ref(iQ));
+					std::thread process2(process_queue<int>, std::ref(iQ));
+
+					process.join();
+					process2.join();
+					consume.join();
+					consume2.join();
+#endif
 				}
 			}
+		}
+	}
+
+	// 6.3 Desiging more complex lock-based data structures
+	{
+		using namespace desiging_more_comple_lock_based_data_structures;
+
+		{
+			using namespace list_6_11;
+			
+		}
+
+		{
+			using namespace list_6_12;
+			threadsafe_list<int> slist;
+			slist.push_front(1);
+			slist.push_front(2);
+			slist.push_front(3);
+
+			slist.for_each([](auto item) {
+				std::cout << item << "\n";
+				});
+
+			slist.remove_if([](auto key) {return key == 3;});
+
+			slist.for_each([](auto item) {
+				std::cout << item << "\n";
+				});
 		}
 	}
 	

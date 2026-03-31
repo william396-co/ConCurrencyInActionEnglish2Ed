@@ -244,6 +244,7 @@ namespace waiting_for_one_off_events_with_futures{
 				}
 				move_only& operator=(move_only&&)noexcept {
 					std::cout << "move_only move_assignment\n";
+					return *this;
 				}
 				move_only(move_only const&) = delete;
 				move_only& operator=(move_only const&) = delete;
@@ -296,7 +297,7 @@ namespace waiting_for_one_off_events_with_futures{
 	namespace making_promise {
 
 		namespace list_4_10 {
-			struct payload_type;
+			class payload_type;
 			struct data_packet {
 				int id;
 				std::size_t payload;
