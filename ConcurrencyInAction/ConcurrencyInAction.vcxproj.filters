@@ -52,6 +52,9 @@
     <Filter Include="Chapter10-ParallelAlgorithm">
       <UniqueIdentifier>{83088c2a-2779-48c4-ba7b-26faeb776ce9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Chapter11-TechinqueForLocatingConcurrencyrelatedBugs">
+      <UniqueIdentifier>{9ea3a7db-96ec-45b8-ab75-9631ffee9845}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,6 +107,9 @@
     </ClCompile>
     <ClCompile Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.cpp">
       <Filter>Chapter10-ParallelAlgorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Chapter11-TechinqueForLocatingConcurrencyrelatedBugs\TestingAndDebuggingMultithreadedApllication.cpp">
+      <Filter>Chapter11-TechinqueForLocatingConcurrencyrelatedBugs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.h">
       <Filter>Chapter10-ParallelAlgorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Chapter11-TechinqueForLocatingConcurrencyrelatedBugs\TestingAndDebuggingMultithreadedApllication.h">
+      <Filter>Chapter11-TechinqueForLocatingConcurrencyrelatedBugs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

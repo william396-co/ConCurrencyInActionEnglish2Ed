@@ -34,6 +34,13 @@ public:
 		data.pop();
 		return true;
 	}
+	T pop() {// blocking pop
+		std::unique_lock lk(mtx);
+		cond.wait(lk, [this] {return !data.empty();});
+		auto res = data.front();
+		data.pop();
+		return res;		
+	}
 	std::shared_ptr<T> try_pop() {
 		std::lock_guard lk(mtx);
 		if (data.empty())return {};
