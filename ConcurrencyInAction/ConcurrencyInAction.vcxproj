@@ -133,6 +133,7 @@
     <ClCompile Include="..\ATM_example\messaging.cpp" />
     <ClCompile Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.cpp" />
     <ClCompile Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.cpp" />
+    <ClCompile Include="..\Chapter11-TechinqueForLocatingConcurrencyrelatedBugs\TestingAndDebuggingMultithreadedApllication.cpp" />
     <ClCompile Include="..\Chapter2-ManagingThreads\BasicThreadManagement.cpp" />
     <ClCompile Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.cpp" />
     <ClCompile Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="..\ATM_example\messaging.h" />
     <ClInclude Include="..\Chapter1-HelloWorldOfConcurrencyInCpp\HelloConcurrencyWorld.h" />
     <ClInclude Include="..\Chapter10-ParallelAlgorithm\ParallelAlgorithm.h" />
+    <ClInclude Include="..\Chapter11-TechinqueForLocatingConcurrencyrelatedBugs\TestingAndDebuggingMultithreadedApllication.h" />
     <ClInclude Include="..\Chapter2-ManagingThreads\BasicThreadManagement.h" />
     <ClInclude Include="..\Chapter3-SharingDataBetweenThreads\SharingDataBetweenThreads.h" />
     <ClInclude Include="..\Chapter4-SynchronizingConcurrentOperation\SychronizingConCurrentOperation.h" />
